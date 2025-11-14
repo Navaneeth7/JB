@@ -225,21 +225,22 @@ STATICFILES_DIRS=[BASE_DIR/'static']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#SMTP MODULE SETTING COMMENTING FOR NOW CHANGES MADE ON(02/11/25)
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'  # Replace with your SMTP server
-# EMAIL_PORT = 587  # Common SMTP port (use 465 for SSL)
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'juicebarassist@gmail.com'
-# EMAIL_HOST_PASSWORD = 'puqf zccf ztle qazd'  # Use environment variables instead of hardcoding
-# DEFAULT_FROM_EMAIL = 'juicebarassist@gmail.com'
+#ROLLBACK ON (14/11/25)
+#Uncomment the below values to make the code run locally for smpt module
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Replace with your SMTP server
+EMAIL_PORT = 587  # Common SMTP port (use 465 for SSL)
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'juicebarassist@gmail.com'
+EMAIL_HOST_PASSWORD = 'puqf zccf ztle qazd'  # Use environment variables instead of hardcoding
+DEFAULT_FROM_EMAIL = 'juicebarassist@gmail.com'
 
-#ChatGPT Changes for SMTP Module
-EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() in ('true', '1')
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+#ChatGPT Changes for SMTP Module, commented these on(14/11/25)
+# EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+# EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+# EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
+# EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() in ('true', '1')
+# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
 
