@@ -14,6 +14,9 @@ from .models import ImageUpload
 from .forms import ImageUploadForm
 from django.views.decorators.cache import never_cache
 from django.db import OperationalError, connection
+from django.conf import settings
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 def homepage(request):
     try:
