@@ -236,13 +236,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # DEFAULT_FROM_EMAIL = 'juicebarassist@gmail.com'
 
 #ADDED THESE SMTP MODULE SENDGRID CHANGES ON(15/11/25)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'apikey'   # <-- always literally this
-EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY')
-DEFAULT_FROM_EMAIL = 'juicebarassist@gmail.com'
+#ATTEMPT 1
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'apikey'   # <-- always literally this
+# EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY')
+# DEFAULT_FROM_EMAIL = 'juicebarassist@gmail.com'
+
+#ADDED THESE SMTP MODULE SENDGRID CHANGES ON(15/11/25)
+#ATTEMPT 2
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+FROM_EMAIL = "juicebarassist@gmail.com"
+
 
 
 #ChatGPT Changes for SMTP Module, commented these on(14/11/25)

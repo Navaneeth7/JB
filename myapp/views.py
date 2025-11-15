@@ -32,19 +32,19 @@ def homepage(request):
 #         username = request.POST.get('username')
 #         email = request.POST.get('email')
 #         password1 = request.POST.get('password')
-
+#
 #         if CustomUser.objects.filter(username=username).exists():
 #             data="Username already taken. Choose a different one."
 #             return render(request,'signup.html',{'data':data})
-        
+#        
 #         if CustomUser.objects.filter(email=email).exists():
 #             data="Username already exists. Choose a different one."
 #             return render(request,'signup.html',{'data':data})
-        
+#        
 #         user = CustomUser.objects.create_user(username=username, email=email, password=password1)
 #         user.save()
 #         return redirect('login')  
-    
+#    
 #     return render(request, 'signup.html',{'data':data})
 
 def login_user(request):
@@ -229,13 +229,24 @@ def forgot_password(request):
             otp = random.randint(100000, 999999)  
             otp_storage[email] = otp
 
-            send_mail(
-                "Your OTP for Password Reset",
-                f"Your OTP is: {otp}",
-                settings.EMAIL_HOST_USER,
-                [email],
-                fail_silently=False,
+            # Use SendGrid Web API instead of SMTP
+            from django.conf import settings
+            from sendgrid import SendGridAPIClient
+            from sendgrid.helpers.mail import Mail
+
+            to_email = email
+            subject = "Your OTP for Password Reset"
+            content = f"Your OTP is: {otp}"
+
+            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+            mail = Mail(
+                from_email=settings.FROM_EMAIL,
+                to_emails=to_email,
+                subject=subject,
+                plain_text_content=content
             )
+            sg.send(mail)
+
             request.session["reset_email"] = email 
             return redirect("verify_otp")
 
@@ -410,14 +421,23 @@ def signup(request):
         # Generate 4-digit OTP
         otp = random.randint(1000, 9999)
 
-        # Send OTP to email
-        send_mail(
-            'Your OTP Code',
-            f'Your OTP code is {otp}. Do not share it with anyone.',
-            'juicebarassist@gmail.com',  # Change to your email
-            [email],
-            fail_silently=False,
+        # Send OTP to email using SendGrid Web API
+        from django.conf import settings
+        from sendgrid import SendGridAPIClient
+        from sendgrid.helpers.mail import Mail
+
+        to_email = email
+        subject = 'Your OTP Code'
+        content = f'Your OTP code is {otp}. Do not share it with anyone.'
+
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        mail = Mail(
+            from_email=settings.FROM_EMAIL,
+            to_emails=to_email,
+            subject=subject,
+            plain_text_content=content
         )
+        sg.send(mail)
 
         # Store user details and OTP in session
         request.session['signup_data'] = {
