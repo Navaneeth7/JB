@@ -143,36 +143,36 @@ WSGI_APPLICATION = 'juiceBar.wsgi.application'
 # }
 #AUTH_USER_MODEL = 'myapp.CustomUser'
 
-#Railway 2nd time deployment Models(database connection)
+
+#02/11/2025
+#Railway 3rd time Deployment
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'railway',
 #         'USER': 'root',
-
-#         # 'PASSWORD': 'okhXXgMWSroOdzMQBdHwSlcJbgXUNcTU',
-#         # 'HOST': 'mainline.proxy.rlwy.net',
-#         # 'PORT': '20697',
-
-#         'PASSWORD': 'dGTVNDqHxAifZivwgKNopSgzTujXLljU',
-#         'HOST': 'hopper.proxy.rlwy.net',
-#         'PORT': '40648',
+#         'PASSWORD': 'jZAgRpVhkrxZTyJedPYPeRFCdWmXlAYT',
+#         'HOST': 'switchyard.proxy.rlwy.net',
+#         'PORT': '44832',
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+#         },
 #     }
 # }
 
-#02/11/2025
-#Railway 3rd time Deployment
+#08/12/2025
+#Railway 4th time Deployment
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'railway',
         'USER': 'root',
-        'PASSWORD': 'jZAgRpVhkrxZTyJedPYPeRFCdWmXlAYT',
-        'HOST': 'switchyard.proxy.rlwy.net',
-        'PORT': '44832',
+        'PASSWORD': 'ldYiHyNKfimjjCbTHllWxweiherSgQsP',
+        'HOST': 'shortline.proxy.rlwy.net',
+        'PORT': '57725',
         'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-        },
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
     }
 }
 
