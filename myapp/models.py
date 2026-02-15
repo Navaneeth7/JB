@@ -69,9 +69,9 @@ class Orders(models.Model):
 
     # UPDATED: SendGrid email instead of send_mail()
     def send_order_email(self):
-        from sendgrid import SendGridAPIClient
-        from sendgrid.helpers.mail import Mail
-        from django.conf import settings
+        # from sendgrid import SendGridAPIClient
+        # from sendgrid.helpers.mail import Mail
+        # from django.conf import settings
 
         subject = "New Order Placed"
 
@@ -86,16 +86,24 @@ class Orders(models.Model):
         Ordered At: {timezone.localtime(self.ordered_at).strftime('%Y-%m-%d %H:%M:%S')}
         """
 
-        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        # sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
 
-        email = Mail(
-            from_email=settings.FROM_EMAIL,
-            to_emails="juicebarhq@gmail.com",  # Admin mail
-            subject=subject,
-            plain_text_content=message
+        # email = Mail(
+        #     from_email=settings.FROM_EMAIL,
+        #     to_emails="juicebarhq@gmail.com",  # Admin mail
+        #     subject=subject,
+        #     plain_text_content=message
+        # )
+
+        # sg.send(email)
+
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            ["juicebarhq@gmail.com"],
+            fail_silently=False,
         )
-
-        sg.send(email)
 
     def save(self, *args, **kwargs):
         is_new = self.pk is None  # Check if this is a new order

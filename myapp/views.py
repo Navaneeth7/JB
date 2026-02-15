@@ -15,8 +15,8 @@ from .forms import ImageUploadForm
 from django.views.decorators.cache import never_cache
 from django.db import OperationalError, connection
 from django.conf import settings
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+#from sendgrid import SendGridAPIClient
+#from sendgrid.helpers.mail import Mail
 
 def homepage(request):
     try:
@@ -233,22 +233,32 @@ def forgot_password(request):
             otp_storage[email] = otp
 
             # Use SendGrid Web API instead of SMTP
-            from django.conf import settings
-            from sendgrid import SendGridAPIClient
-            from sendgrid.helpers.mail import Mail
+            # from django.conf import settings
+            # from sendgrid import SendGridAPIClient
+            # from sendgrid.helpers.mail import Mail
 
-            to_email = email
-            subject = "Your OTP for Password Reset"
-            content = f"Your OTP is: {otp}"
+            # to_email = email
+            # subject = "Your OTP for Password Reset"
+            # content = f"Your OTP is: {otp}"
 
-            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-            mail = Mail(
-                from_email=settings.FROM_EMAIL,
-                to_emails=to_email,
-                subject=subject,
-                plain_text_content=content
+            # sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+            # mail = Mail(
+            #     from_email=settings.FROM_EMAIL,
+            #     to_emails=to_email,
+            #     subject=subject,
+            #     plain_text_content=content
+            # )
+            # sg.send(mail)
+
+            #Changes made on 15/02/26
+            send_mail(
+                    "Your OTP for Password Reset",
+                    f"Your OTP is: {otp}",
+                    settings.DEFAULT_FROM_EMAIL,
+                    [email],
+                    fail_silently=False,
             )
-            sg.send(mail)
+
 
             request.session["reset_email"] = email 
             return redirect("verify_otp")
@@ -425,22 +435,31 @@ def signup(request):
         otp = random.randint(1000, 9999)
 
         # Send OTP to email using SendGrid Web API
-        from django.conf import settings
-        from sendgrid import SendGridAPIClient
-        from sendgrid.helpers.mail import Mail
+        # from django.conf import settings
+        # from sendgrid import SendGridAPIClient
+        # from sendgrid.helpers.mail import Mail
 
-        to_email = email
-        subject = 'Your OTP Code'
-        content = f'Your OTP code is {otp}. Do not share it with anyone.'
+        # to_email = email
+        # subject = 'Your OTP Code'
+        # content = f'Your OTP code is {otp}. Do not share it with anyone.'
 
-        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-        mail = Mail(
-            from_email=settings.FROM_EMAIL,
-            to_emails=to_email,
-            subject=subject,
-            plain_text_content=content
+        # sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        # mail = Mail(
+        #     from_email=settings.FROM_EMAIL,
+        #     to_emails=to_email,
+        #     subject=subject,
+        #     plain_text_content=content
+        # )
+        # sg.send(mail)
+
+        send_mail(
+            "Your OTP Code",
+            f"Your OTP code is {otp}. Do not share it with anyone.",
+            settings.DEFAULT_FROM_EMAIL,
+            [email],
+            fail_silently=False,
         )
-        sg.send(mail)
+
 
         # Store user details and OTP in session
         request.session['signup_data'] = {
