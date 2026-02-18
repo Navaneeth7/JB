@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
+#from django.core.mail import send_mail
 from django.contrib import messages
 import random
 from .forms import *
@@ -15,8 +15,8 @@ from .forms import ImageUploadForm
 from django.views.decorators.cache import never_cache
 from django.db import OperationalError, connection
 from django.conf import settings
-#from sendgrid import SendGridAPIClient
-#from sendgrid.helpers.mail import Mail
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 def homepage(request):
     try:
@@ -251,13 +251,23 @@ def forgot_password(request):
             # sg.send(mail)
 
             #Changes made on 15/02/26
-            send_mail(
-                    "Your OTP for Password Reset",
-                    f"Your OTP is: {otp}",
-                    settings.DEFAULT_FROM_EMAIL,
-                    [email],
-                    fail_silently=False,
+            # send_mail(
+            #         "Your OTP for Password Reset",
+            #         f"Your OTP is: {otp}",
+            #         settings.DEFAULT_FROM_EMAIL,
+            #         [email],
+            #         fail_silently=False,
+            # )
+
+            message = Mail(
+                from_email=settings.FROM_EMAIL,
+                to_emails=email,
+                subject="Your OTP for Password Reset",
+                plain_text_content=f"Your OTP is: {otp}"
             )
+
+            SendGridAPIClient(settings.SENDGRID_API_KEY).send(message)
+
 
 
             request.session["reset_email"] = email 
@@ -452,13 +462,22 @@ def signup(request):
         # )
         # sg.send(mail)
 
-        send_mail(
-            "Your OTP Code",
-            f"Your OTP code is {otp}. Do not share it with anyone.",
-            settings.DEFAULT_FROM_EMAIL,
-            [email],
-            fail_silently=False,
+        # send_mail(
+        #     "Your OTP Code",
+        #     f"Your OTP code is {otp}. Do not share it with anyone.",
+        #     settings.DEFAULT_FROM_EMAIL,
+        #     [email],
+        #     fail_silently=False,
+        # )
+        message = Mail(
+            from_email=settings.FROM_EMAIL,
+            to_emails=email,
+            subject="Your OTP Code",
+            plain_text_content=f"Your OTP code is {otp}. Do not share it with anyone."
         )
+
+        SendGridAPIClient(settings.SENDGRID_API_KEY).send(message)
+
 
 
         # Store user details and OTP in session
