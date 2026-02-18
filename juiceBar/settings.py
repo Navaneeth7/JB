@@ -228,13 +228,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Uncomment the below values to make the code run locally for smpt module
 #Commented on (15/11/25)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Replace with your SMTP server
-EMAIL_PORT = 587  # Common SMTP port (use 465 for SSL)
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'juicebarassist@gmail.com'
-EMAIL_HOST_PASSWORD = 'puqf zccf ztle qazd'  # Use environment variables instead of hardcoding
-DEFAULT_FROM_EMAIL = 'juicebarassist@gmail.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'  # Replace with your SMTP server
+# EMAIL_PORT = 587  # Common SMTP port (use 465 for SSL)
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'juicebarassist@gmail.com'
+# EMAIL_HOST_PASSWORD = 'puqf zccf ztle qazd'  # Use environment variables instead of hardcoding
+# DEFAULT_FROM_EMAIL = 'juicebarassist@gmail.com'
 
 #ADDED THESE SMTP MODULE SENDGRID CHANGES ON(15/11/25)
 #ATTEMPT 1
@@ -262,19 +262,15 @@ DEFAULT_FROM_EMAIL = 'juicebarassist@gmail.com'
 # EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 # DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
-#Emailsender
-# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST_USER = "apikey"
+EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_API_KEY")
+DEFAULT_FROM_EMAIL = "juicebarassist@gmail.com"
 
-# EMAIL_HOST = "smtp.mailersend.net"
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-
-# EMAIL_HOST_USER = "MS_jZBDHl@test-51ndgwvyx1dlzqx8.mlsender.net"
-# EMAIL_HOST_PASSWORD = "mssp.NbWWYrg.k68zxl2yr254j905.ex1zP8e"
-
-# #DEFAULT_FROM_EMAIL = "test-51ndgwvyx1dlzqx8.mlsender.net"
-# DEFAULT_FROM_EMAIL = "noreply@test-51ndgwvyx1dlzqx8.mlsender.net"
 
 
 
